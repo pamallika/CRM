@@ -15,6 +15,8 @@ class CreateCompanyContact extends Migration
     {
         Schema::create('company_contact', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('company_id')->constrained('companies');
+            $table->foreignId('contact_id')->constrained('contacts');
             $table->timestamps();
         });
     }

@@ -15,6 +15,11 @@ class CreateStagesTable extends Migration
     {
         Schema::create('stages', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('pipeline_id')->constrained('pipelines');
+            $table->string('name');
+            $table->integer('position');
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('account_id')->constrained('accounts');
             $table->timestamps();
         });
     }

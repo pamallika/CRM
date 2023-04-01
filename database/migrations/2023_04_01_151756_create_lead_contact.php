@@ -15,6 +15,8 @@ class CreateLeadContact extends Migration
     {
         Schema::create('lead_contact', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('lead_id')->constrained('leads');
+            $table->foreignId('contact_id')->constrained('contacts');
             $table->timestamps();
         });
     }
