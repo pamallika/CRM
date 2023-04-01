@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\AccountResource;
 use App\Models\Account;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class AccountController extends Controller
      */
     public function index()
     {
-        return Account::all();
+        return AccountResource::Collection(Account::all());
     }
 
     /**
@@ -37,7 +38,7 @@ class AccountController extends Controller
      */
     public function show($id)
     {
-        return Account::find($id);
+        return new AccountResource(Account::with('users')->findOrFail($id));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StageResource;
 use App\Models\Stage;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class StageController extends Controller
      */
     public function index()
     {
-        return Stage::all();
+        return StageResource::Collection(Stage::all());
     }
 
     /**
@@ -37,7 +38,7 @@ class StageController extends Controller
      */
     public function show($id)
     {
-        return Stage::find($id);
+        return new StageResource(Stage::findOrFail($id));
     }
 
     /**

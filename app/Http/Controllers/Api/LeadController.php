@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\LeadResource;
 use App\Models\Lead;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class LeadController extends Controller
      */
     public function index()
     {
-        return Lead::all();
+        return new LeadResource(Lead::all());
     }
 
     /**
@@ -37,7 +38,7 @@ class LeadController extends Controller
      */
     public function show($id)
     {
-        return Lead::find($id);
+        return LeadResource::Collection(Lead::findOrFail($id));
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\PipelineResource;
 use App\Models\Pipeline;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class PipelineController extends Controller
      */
     public function index()
     {
-        return Pipeline::all();
+        return PipelineResource::Collection(Pipeline::all());
     }
 
     /**
@@ -37,7 +38,7 @@ class PipelineController extends Controller
      */
     public function show($id)
     {
-        return Pipeline::find($id);
+        return new PipelineResource(Pipeline::findOrFail($id));
     }
 
     /**
