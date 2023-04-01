@@ -2,10 +2,12 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class AccountFactory extends Factory
 {
+    protected $model = Account::class;
     /**
      * Define the model's default state.
      *
@@ -14,7 +16,7 @@ class AccountFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'mode' => 0,
         ];
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Account;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class PipelineFactory extends Factory
@@ -14,7 +16,9 @@ class PipelineFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => $this->faker->name(),
+            'user_id' => User::get()->random()->id,
+            'account_id' => Account::get()->random()->id,
         ];
     }
 }

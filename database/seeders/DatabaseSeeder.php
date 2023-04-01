@@ -13,6 +13,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // User::factory(10)->create();
+        (new AccountsSeeder)->run(10);
+        (new UsersSeeder)->run(10);
+        (new ContactsSeeder)->run(10);
+        (new CompaniesSeeder)->run(10);
+        (new PipelinesSeeder)->run(10);
+        (new StagesSeeder)->run(10);
+        (new LeadsSeeder)->run(10);
     }
 }
