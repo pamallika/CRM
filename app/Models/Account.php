@@ -9,6 +9,8 @@ class Account extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['mode'];
+    
     public function users()
     {
         return $this->hasMany(User::class);

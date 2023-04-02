@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StageRequest;
 use App\Http\Resources\StageResource;
 use App\Models\Stage;
 use Illuminate\Http\Request;
@@ -25,9 +26,10 @@ class StageController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StageRequest $request)
     {
-        //
+        $created_stage = Stage::create($request->validated());
+        return new StageResource($created_stage);
     }
 
     /**

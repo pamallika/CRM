@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PipelineRequest;
 use App\Http\Resources\PipelineResource;
 use App\Models\Pipeline;
 use Illuminate\Http\Request;
@@ -25,9 +26,10 @@ class PipelineController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PipelineRequest $request)
     {
-        //
+        $created_pipeline = Pipeline::create($request->validated());
+        return new PipelineResource($created_pipeline);
     }
 
     /**
