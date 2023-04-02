@@ -7,6 +7,7 @@ use App\Http\Requests\StageRequest;
 use App\Http\Resources\StageResource;
 use App\Models\Stage;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class StageController extends Controller
 {
@@ -38,9 +39,9 @@ class StageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Stage $stage)
     {
-        return new StageResource(Stage::findOrFail($id));
+        return new StageResource($stage);
     }
 
     /**
@@ -50,9 +51,10 @@ class StageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StageRequest $request, Stage $stage)
     {
-        //
+        $stage->update($request->validated());
+        return new StageResource($stage);
     }
 
     /**
@@ -61,8 +63,9 @@ class StageController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Stage $stage)
     {
-        //
+        $stage->delete($stage);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

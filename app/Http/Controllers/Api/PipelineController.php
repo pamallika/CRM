@@ -7,6 +7,7 @@ use App\Http\Requests\PipelineRequest;
 use App\Http\Resources\PipelineResource;
 use App\Models\Pipeline;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class PipelineController extends Controller
 {
@@ -38,9 +39,9 @@ class PipelineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Pipeline $pipeline)
     {
-        return new PipelineResource(Pipeline::findOrFail($id));
+        return new PipelineResource($pipeline);
     }
 
     /**
@@ -50,9 +51,10 @@ class PipelineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PipelineRequest $request, Pipeline $pipeline)
     {
-        //
+        $pipeline->update($request->validated());
+        return new PipelineResource($pipeline);
     }
 
     /**
@@ -61,8 +63,9 @@ class PipelineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Pipeline $pipeline)
     {
-        //
+        $pipeline->delete($pipeline);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

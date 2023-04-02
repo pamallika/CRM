@@ -7,6 +7,7 @@ use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class CompanyController extends Controller
 {
@@ -38,9 +39,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Company $company)
     {
-        return new CompanyResource(Company::findOrFail($id));
+        return new CompanyResource($company);
     }
 
     /**
@@ -50,9 +51,10 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(CompanyRequest $request, Company $company)
     {
-        //
+        $company->update($request->validated());
+        return new CompanyResource($company);
     }
 
     /**
@@ -61,8 +63,9 @@ class CompanyController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Company $company)
     {
-        //
+        $company->delete();
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

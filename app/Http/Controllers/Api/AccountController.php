@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AccountRequest;
 use App\Http\Resources\AccountResource;
 use App\Models\Account;
+use Illuminate\Http\Client\Response;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response as HttpResponse;
+use Illuminate\Support\Facades\Http;
 
 class AccountController extends Controller
 {
@@ -38,9 +41,9 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Account $account)
     {
-        return new AccountResource(Account::with('users')->findOrFail($id));
+        return new AccountResource($account);
     }
 
     /**
@@ -50,9 +53,10 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(AccountRequest $request, Account $account)
     {
-        //
+        $account->update($request->validated());
+        return new AccountResource($account);
     }
 
     /**
@@ -61,8 +65,9 @@ class AccountController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Account $account)
     {
-        //
+        $account->delete();
+        return response(null, HttpResponse::HTTP_NO_CONTENT);
     }
 }

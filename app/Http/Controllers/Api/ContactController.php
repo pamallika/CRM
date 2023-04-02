@@ -7,6 +7,7 @@ use App\Http\Requests\ContactRequest;
 use App\Http\Resources\ContactResource;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ContactController extends Controller
 {
@@ -38,9 +39,9 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Contact $contact)
     {
-        return new ContactResource(Contact::find($id));
+        return new ContactResource($contact);
     }
 
     /**
@@ -50,9 +51,10 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ContactRequest $request, Contact $contact)
     {
-        //
+        $contact->update($request->validated());
+        return new ContactResource($contact);
     }
 
     /**
@@ -61,8 +63,9 @@ class ContactController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Contact $contact)
     {
-        //
+        $contact->delete($contact);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }

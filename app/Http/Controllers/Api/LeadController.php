@@ -7,6 +7,7 @@ use App\Http\Requests\LeadRequest;
 use App\Http\Resources\LeadResource;
 use App\Models\Lead;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class LeadController extends Controller
 {
@@ -38,9 +39,9 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Lead $lead)
     {
-        return LeadResource::Collection(Lead::findOrFail($id));
+        return new LeadResource($lead);
     }
 
     /**
@@ -50,9 +51,10 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(LeadRequest $request, Lead $lead)
     {
-        //
+        $lead->update($request->validated());
+        return new LeadResource($lead);
     }
 
     /**
@@ -61,8 +63,9 @@ class LeadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Lead $lead)
     {
-        //
+        $lead->delete($lead);
+        return response(null, Response::HTTP_NO_CONTENT);
     }
 }
